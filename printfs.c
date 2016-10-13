@@ -4,6 +4,7 @@
 #include <linux/poll.h>
 #include <sys/ioctl.h>
 #include <linux/usb/g_printer.h>
+#include <time.h>
 
 #define PRINTER_FILE			"/dev/g_printer0"
 #define BUF_SIZE			512
@@ -59,7 +60,10 @@ read_printer_data()
 
 	fd[0].events = POLLIN | POLLRDNORM;
 
-	while (1) {
+	int time_read = (int)time(NULL);
+	int time_idle = (int)time(NULL);
+
+	while ( (time_idle - time_read) < 5 ) {
 		static char buf[BUF_SIZE];
 		int bytes_read;
 		int retval;
@@ -81,10 +85,11 @@ read_printer_data()
 				/* Write data to standard OUTPUT (stdout). */
 				fwrite(buf, 1, bytes_read, stdout);
 				fflush(stdout);
+				time_read = (int)time(NULL);
+			} else if (bytes_read == 0) {
+				time_idle = (int)time(NULL);
 			}
-
 		}
-
 	}
 
 	/* Close the device file. */
