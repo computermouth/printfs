@@ -14,7 +14,7 @@ define PRINTFS_BUILD_CMDS
 endef
 
 define PRINTFS_INSTALL_TARGET_CMDS
-        $(INSTALL) -D -m 0755 $(@D)printfs $(TARGET_DIR)/usr/bin/printfs
+        $(INSTALL) -D -m 0755 $(@D)/printfs $(TARGET_DIR)/usr/bin/printfs
 endef
 
 $(eval $(generic-package))
