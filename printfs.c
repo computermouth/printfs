@@ -62,14 +62,16 @@ read_printer_data()
 
 	int time_read = (int)time(NULL);
 	int time_idle = (int)time(NULL);
+	int oldretval = 1;
 
-	while ( (time_idle - time_read) < 5 ) {
+	while ( oldretval ) {
 		static char buf[BUF_SIZE];
 		int bytes_read;
 		int retval;
 
-		/* Wait for up to 1 second for data. */
-		retval = poll(fd, 1, 1000);
+		/* Wait for up to 5 second for data. */
+		retval = poll(fd, 1, 5000);
+		oldretval = retval;
 
 		if (retval && (fd[0].revents & POLLRDNORM)) {
 
@@ -85,9 +87,9 @@ read_printer_data()
 				/* Write data to standard OUTPUT (stdout). */
 				fwrite(buf, 1, bytes_read, stdout);
 				fflush(stdout);
-				time_read = (int)time(NULL);
-			} else if (bytes_read == 1) {
-				time_idle = (int)time(NULL);
+				//time_read = (int)time(NULL);
+			} else if (bytes_read == 0) {
+				//time_idle = (int)time(NULL);
 			}
 		}
 	}
