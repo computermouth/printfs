@@ -86,7 +86,7 @@ read_printer_data()
 				fwrite(buf, 1, bytes_read, stdout);
 				fflush(stdout);
 				time_read = (int)time(NULL);
-			} else if (bytes_read == 0) {
+			} else if (bytes_read == 1) {
 				time_idle = (int)time(NULL);
 			}
 		}
