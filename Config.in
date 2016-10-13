@@ -1,0 +1,4 @@
+config BR2_PACKAGE_PRINTFS
+	bool "printfs"
+	help
+	  Small program to grab raw data from gadget print device.
