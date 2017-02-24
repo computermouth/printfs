@@ -6,7 +6,7 @@
 #include <linux/usb/g_printer.h>
 #include <time.h>
 
-#define PRINTER_FILE			"/dev/g_printer0"
+#define PRINTER_FILE			"/dev/ttyGS0"
 #define BUF_SIZE			512
 
 
